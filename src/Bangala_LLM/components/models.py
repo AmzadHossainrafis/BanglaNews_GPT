@@ -27,45 +27,45 @@ class GPT2(nn.Module):
         logits = self.out_head(x)
         return logits
     
-if __name__ == "__main__":
-    import tiktoken
+# if __name__ == "__main__":
+#     import tiktoken
 
-    tokenizer = tiktoken.get_encoding("gpt2")
-    batch = []
-    text1 = "আমি বাংলায় গান গাই।"
-    text2 = "আমি বাংলায় গান গাই।"
+#     tokenizer = tiktoken.get_encoding("gpt2")
+#     batch = []
+#     text1 = "আমি বাংলায় গান গাই।"
+#     text2 = "আমি বাংলায় গান গাই।"
 
-    batch.append(torch.tensor(tokenizer.encode(text1)))
-    batch.append(torch.tensor(tokenizer.encode(text2)))
+#     batch.append(torch.tensor(tokenizer.encode(text1)))
+#     batch.append(torch.tensor(tokenizer.encode(text2)))
 
-    batch = torch.stack(batch)
+#     batch = torch.stack(batch)
 
-    gpt_confg = {
-        "vocab_size": 50257,
-        "context_length": 1024,
-        "emb_dim": 768,
-        "num_heads": 12,
-        "dropout": 0.1,
-        "num_layers": 12,
-        "qkv_bias": False,
-    }
+#     gpt_confg = {
+#         "vocab_size": 50257,
+#         "context_length": 1024,
+#         "emb_dim": 768,
+#         "num_heads": 12,
+#         "dropout": 0.1,
+#         "num_layers": 12,
+#         "qkv_bias": False,
+#     }
 
-    # model = DummyGPt(gpt_confg)
-    # out = model(batch)
-    # print(f"output shape: {out.size()}")
-    # print(out)
-    model = GPT2(gpt_confg)
-    out = model(batch)
-    print(f"output shape: {out.size()}")
+#     # model = DummyGPt(gpt_confg)
+#     # out = model(batch)
+#     # print(f"output shape: {out.size()}")
+#     # print(out)
+#     model = GPT2(gpt_confg)
+#     out = model(batch)
+#     print(f"output shape: {out.size()}")
 
-#     x = torch.randn(2, 10, 512)
-#     multihead = MHAttention(512, 512, 8, 10)
-#     out = multihead(x)
-#     print(out.size())
-
-
-# # if __name__ == '__main__':
 # #     x = torch.randn(2, 10, 512)
-# #     multihead = MultyHeadAttention(512, 512, 10, 8)
+# #     multihead = MHAttention(512, 512, 8, 10)
 # #     out = multihead(x)
 # #     print(out.size())
+
+
+# # # if __name__ == '__main__':
+# # #     x = torch.randn(2, 10, 512)
+# # #     multihead = MultyHeadAttention(512, 512, 10, 8)
+# # #     out = multihead(x)
+# # #     print(out.size())
