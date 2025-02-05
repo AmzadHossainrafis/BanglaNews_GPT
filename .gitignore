@@ -18,4 +18,4 @@ build/
 # Ignore OS generated files
 .DS_Store
 Thumbs.db
-bangla_GPT/dataset/Bengali-News-Summarization-Dataset/
+./bangla_GPT/dataset/Bengali-News-Summarization-Dataset/
