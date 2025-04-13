@@ -19,3 +19,4 @@ build/
 .DS_Store
 Thumbs.db
 ./bangla_GPT/dataset/Bengali-News-Summarization-Dataset/
+dataset/

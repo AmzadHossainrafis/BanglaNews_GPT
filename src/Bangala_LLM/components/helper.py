@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 
 
-
 class SelfAttention(nn.Module):
     def __init__(self, in_dim, d_out, context_length, dropout=0.1, qkv_bias=False):
         super().__init__()
@@ -207,4 +206,3 @@ class GELU_Activation(nn.Module):
                 )
             )
         )
-
