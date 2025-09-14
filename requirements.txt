@@ -1,2 +1,4 @@
+pyyaml 
+pytorch
 tiktoken
 bnlp_toolkit
