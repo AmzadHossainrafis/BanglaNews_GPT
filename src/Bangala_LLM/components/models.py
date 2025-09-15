@@ -1,11 +1,15 @@
 import torch
 import torch.nn as nn
 from Bangala_LLM.components.helper import TransformerBlock
+from Bangala_LLM.utils.logger import logger
 
 
 class GPT2(nn.Module):
     def __init__(self, config):
         super().__init__()
+        logger.info("Initializing GPT2 model.")
+        logger.info(f"Model configuration: {config}")
+
         self.tokens_embeddings = nn.Embedding(config["vocab_size"], config["emb_dim"])
         self.pos_emb = nn.Embedding(config["context_length"], config["emb_dim"])
         self.dropout = nn.Dropout(config["dropout"])

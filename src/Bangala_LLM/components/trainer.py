@@ -10,59 +10,54 @@ from Bangala_LLM.utils.common import (
 )
 import tiktoken
 import tqdm
+from Bangala_LLM.utils.common import read_config
+from Bangala_LLM.utils.logger import logger
+
+config = read_config("../../../config/config.yaml")
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-GPT_CONFIG_124M = {
-    "vocab_size": 50257,
-    "context_length": 1024,
-    "emb_dim": 768,
-    "num_heads": 12,
-    "dropout": 0.1,
-    "num_layers": 12,
-    "qkv_bias": False,
-}
+GPT_CONFIG_124M = config
 
 
 model = GPT2(GPT_CONFIG_124M).to(device)
 torch.manual_seed(123)  # For reproducibility due to the shuffling in the data loader
 
 
-trai_data_path = "/home/amzad/Desktop/bangla_GPT/dataset/test.txt"
-val_data_path = "/home/amzad/Desktop/bangla_GPT/dataset/prothom_alo.txt"
-
 # Load the train and validation data
-with open(trai_data_path, "r") as f:
+with open(config["dir"]["train_data_path"], "r", encoding="utf-8") as f:
     train_data = f.read()
-
-
-with open(val_data_path, "r") as f:
+logger.info(f"train data path: {config['dir']['train_data_path']} dataloaded")
+with open(config["dir"]["eval_data_path"], "r", encoding="utf-8") as f:
     val_data = f.read()
+logger.info(f"eval data path: {config['dir']['eval_data_path']} dataloaded")
 
 
 val_loader = create_dataloader_v1(
     val_data,
-    batch_size=2,
-    max_length=GPT_CONFIG_124M["context_length"],
-    stride=GPT_CONFIG_124M["context_length"],
-    drop_last=True,
-    shuffle=True,
+    batch_size=config["data_loader"]["eval_batch_size"],
+    max_length=config["model_config"]["context_length"],
+    stride=config["model_config"]["context_length"],
+    drop_last=config["data_loader"]["drop_last"],
+    shuffle=config["data_loader"]["shuffle"],
     num_workers=4,
 )
-
+logger.info("val dataloader created")
 train_loader = create_dataloader_v1(
     train_data,
-    batch_size=1,
-    max_length=GPT_CONFIG_124M["context_length"],
-    stride=GPT_CONFIG_124M["context_length"],
-    drop_last=False,
-    shuffle=False,
+    batch_size=config["data_loader"]["train_batch_size"],
+    max_length=config["model_config"]["context_length"],
+    stride=config["model_config"]["context_length"],
+    drop_last=config["data_loader"]["drop_last"],
+    shuffle=config["data_loader"]["shuffle"],
     num_workers=4,
 )
 
-print("data loaded")
+logger.info("train dataloader created")
+logger.info(f"training started on device: {device}")
+logger.info(f"model config: {GPT_CONFIG_124M}")
 
 
 def train_model_simple(
@@ -106,7 +101,7 @@ def train_model_simple(
                     f"Train loss {train_loss:.3f}, Val loss {val_loss:.3f}"
                 )
 
-        # Print a sample text after each epoch
+                # Print a sample text after each epoch
                 generate_and_print_sample(model, tokenizer, device, start_context)
 
     return train_losses, val_losses, track_tokens_seen
@@ -147,10 +142,10 @@ train_losses, val_losses, tokens_seen = train_model_simple(
     val_loader,
     optimizer,
     device,
-    num_epochs=num_epochs,
-    eval_freq=100,
-    eval_iter=500,
-    start_context="<p>গাইবান্ধার মৃত্যুদণ্ডপ্রাপ্ত সাবেক সংসদ সদস্য কর্নেল কাদের খান মারা গেছেন -",
+    num_epochs=config["training"]["epochs"],
+    eval_freq=config["training"]["eval_freq"],
+    eval_iter=config["training"]["eval_iter"],
+    start_context=config["training"]["start_context"],
     tokenizer=tokenizer,
 )
 
