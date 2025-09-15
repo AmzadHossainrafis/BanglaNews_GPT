@@ -1,5 +1,5 @@
 import torch
-import tiktoken
+import yaml
 
 
 def text_to_token_indx(txt, tokenizer):
@@ -13,7 +13,7 @@ def token_indx_to_text(indx, tokenizer):
 
 
 def generate(
-    model, idx, max_new_tokens, context_size, temperature=0.0, top_k=None, eos_id=None
+    model, idx, max_new_tokens, context_size, temperature=0.5, top_k=None, eos_id=None
 ):
 
     # For-loop is the same as before: Get logits, and only focus on last time step
@@ -73,8 +73,6 @@ def calc_loss_loader(data_loader, model, device, num_batches=None):
     elif num_batches is None:
         num_batches = len(data_loader)
     else:
-        # Reduce the number of batches to match the total number of batches in the data loader
-        # if num_batches exceeds the number of batches in the data loader
         num_batches = min(num_batches, len(data_loader))
     for i, (input_batch, target_batch) in enumerate(data_loader):
         if i < num_batches:
@@ -85,22 +83,8 @@ def calc_loss_loader(data_loader, model, device, num_batches=None):
     return total_loss / num_batches
 
 
-# if __name__ == "__main__":
+def read_config(config_path):
 
-#     from src.Bangala_LLM.components.models import  GPT2
-
-#     gpt_confg = {
-#         "vocab_size": 50257,
-#         "context_length": 1024,
-#         "emb_dim": 768,
-#         "num_heads": 12,
-#         "dropout": 0.1,
-#         "num_layers": 12,
-#         "qkv_bias": False,
-#     }
-
-#     model = GPT2(gpt_confg)
-#     indx = torch.tensor([[0, 50256]])
-#     out = generate_text_simple(model , indx , 10 , 10)
-#     print(out)
-#     print(out.size())
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
+    return config
