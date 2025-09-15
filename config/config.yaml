@@ -1,7 +1,33 @@
-vocab_size: 50257,
-context_length: 1024,
-emb_dim: 768,
-num_heads: 12,
-dropout: 0.1,
-num_layers: 12,
-qkv_bias: False,
+model_config:
+  - vocab_size: 50257,
+  - context_length: 1024, #dont change it
+  - emb_dim: 768, #dont change it
+  - num_heads: 12,
+  - dropout: 0.1,
+  - num_layers: 12,
+  - qkv_bias: False,
+
+dir : 
+  train_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/train.txt # CHANGE THIS PATH TO YOUR DATASET PATH
+  eval_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/valid.txt # CHANGE THIS PATH TO YOUR DATASET PATH
+
+
+data_loader:
+  train_batch_size: 12
+  eval_batch_size: 4
+  num_workers: 4
+  pin_memory: True
+  shuffle: True
+  val_split: 0.1
+  seq_len: 1024
+  drop_last: True
+ 
+
+
+training:
+  epochs: 10
+  lr: 0.0001
+  eval_freq: 100
+  eval_iter: 500
+  start_context: "<p>গাইবান্ধার মৃত্যুদণ্ডপ্রাপ্ত সাবেক সংসদ সদস্য কর্নেল কাদের খান মারা গেছেন -" # change this to traing data context
+  save_model_path: './models/bangla_gpt_model.pth'

@@ -47,8 +47,17 @@ pip install -e .
 ```bash
 pip install -r requirements.txt
 ```
+7. split the data 
+```python
 
-7. run the training 
+from src.Bangala_LLM.components.data_injection import DataInjector
+data_injector = DataInjector(data_dir="path/to/data.txt")
+train_data, val_data = data_injector.split_data()
+data_injector.save_data(train_data, val_data, "path/to/train.txt", "path/to/val.txt")
+
+
+```
+8. run the training
 ```bash
 python src/Bangala_LLM/train.py 
 ```
