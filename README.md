@@ -50,14 +50,16 @@ pip install -r requirements.txt
 7. split the data 
 ```python
 
-from src.Bangala_LLM.components.data_injection import DataInjector
-data_injector = DataInjector(data_dir="path/to/data.txt")
-train_data, val_data = data_injector.split_data()
-data_injector.save_data(train_data, val_data, "path/to/train.txt", "path/to/val.txt")
+from src.Bangala_LLM.components.data_injection import DataLoaderInjectorv2
 
-
+data_injector = DataLoaderInjectorv2(
+        data_path="<path_to_your_data.txt"
+    )
+    data = data_injector.get_data()
+    train_data, val_data = data_injector.split_data(data)
 ```
 8. run the training
 ```bash
-python src/Bangala_LLM/train.py 
+cd src/Bangala_LLM/components/
+python trainer.py
 ```
