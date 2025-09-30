@@ -9,12 +9,12 @@ model_config:
   
 
 dir : 
-  train_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/prothom_data.csv # CHANGE THIS PATH TO YOUR DATASET PATH
-  eval_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/demo_text.txt # CHANGE THIS PATH TO YOUR DATASET PATH
+  train_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/train.txt # CHANGE THIS PATH TO YOUR DATASET PATH
+  eval_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/val.txt # CHANGE THIS PATH TO YOUR DATASET PATH
 
 
 data_loader:
-  train_batch_size: 2
+  train_batch_size: 1
   eval_batch_size: 1
   num_workers: 0
   pin_memory: False
@@ -27,8 +27,8 @@ data_loader:
 
 training:
   epochs: 10
-  lr: 0.0001
+  lr: 0.00001
   eval_freq: 100
   eval_iter: 500
-  start_context: "<p>গাইবান্ধার মৃত্যুদণ্ডপ্রাপ্ত সাবেক সংসদ সদস্য কর্নেল কাদের খান মারা গেছেন -" # change this to traing data context
+  start_context: "These fifteen years you have been in a dream;" # change this to traing data context
   save_model_path: './models/bangla_gpt_model.pth'

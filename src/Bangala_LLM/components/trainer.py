@@ -161,7 +161,7 @@ class trainner:
         self.optimizer = optimizer
         self.device = device
         self.start_context = (
-            "গাইবান্ধার মৃত্যুদণ্ডপ্রাপ্ত সাবেক সংসদ সদস্য কর্নেল কাদের খান মারা গেছেন -"
+            "These fifteen years you have been in a dream;"
         )
         self.tokenizer = tokenizer
 
@@ -203,7 +203,7 @@ class trainner:
                     )
 
             # Print a sample text after each epoch
-            generate_and_print_sample(model, tokenizer, device, start_context)
+            generate_and_print_sample(model, tokenizer, device, self.start_context)
 
     def evaluate_model(self, eval_iter):
         self.model.eval()
