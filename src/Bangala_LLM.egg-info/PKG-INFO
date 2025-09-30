@@ -1,4 +1,4 @@
-Metadata-Version: 2.2
+Metadata-Version: 2.4
 Name: Bangala_LLM
 Version: 0.0.0
 Summary: A small python package for image deblurring using DnCNN
@@ -9,6 +9,72 @@ Project-URL: Bug Tracker, https://github.com/Amzad hossain rafi/Bangala_LLM/issu
 License-File: LICENSE
 Dynamic: author
 Dynamic: author-email
+Dynamic: description
 Dynamic: home-page
+Dynamic: license-file
 Dynamic: project-url
 Dynamic: summary
+
+## bangla LLM Collection
+
+### looking for active contributors 
+
+
+
+1. current available models 
+   - Bangla GPT-2 (small, medium, large)(number of heads are 12, 24, 36 respectively)
+
+2. future models 
+   - Bangla LLaMA 2(7B, 13B, 65B)
+   - Bangla LLaMA 3(7B, 13B, 65B)
+   - Bangla qwen 3 (7B, 14B, 70B)
+
+3. dataset
+   - demo dataset available inside the dataset folder 
+   
+   
+## installation
+
+1. create an conda environment 
+```bash
+conda create --name myenv python=3.9 -y 
+conda activate myenv
+```
+2. clone the repo 
+```bash 
+git clone <repo_link>
+cd <repo_name> 
+
+```
+3. change the logging dir in `src/Bangala_LLM/utils/logger.py` file
+```python
+dir = r"/path/to/your/logs/directory"
+```
+
+
+4. install the package
+```bash
+pip install -e . 
+
+``` 
+5. change the config file `configs/config.yaml` as per your requirement
+
+
+6. install the requirements
+```bash
+pip install -r requirements.txt
+```
+7. split the data 
+```python
+
+from src.Bangala_LLM.components.data_injection import DataInjector
+data_injector = DataInjector(data_dir="path/to/data.txt")
+train_data, val_data = data_injector.split_data()
+data_injector.save_data(train_data, val_data, "path/to/train.txt", "path/to/val.txt")
+
+
+```
+8. run the training
+```bash
+python src/Bangala_LLM/train.py 
+```

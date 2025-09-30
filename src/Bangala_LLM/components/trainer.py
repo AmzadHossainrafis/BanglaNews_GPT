@@ -18,13 +18,13 @@ config = read_config("../../../config/config.yaml")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+GPT_CONFIG_124M = config["model_config"]
 
-GPT_CONFIG_124M = config
-
-
+logger.info(f"Using device: {device}")
+logger.info(f"Model configuration: {GPT_CONFIG_124M}")
 model = GPT2(GPT_CONFIG_124M).to(device)
 torch.manual_seed(123)  # For reproducibility due to the shuffling in the data loader
-
+logger.info("Model instantiated and moved to device.")
 
 # Load the train and validation data
 with open(config["dir"]["train_data_path"], "r", encoding="utf-8") as f:

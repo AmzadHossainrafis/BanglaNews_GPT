@@ -1,10 +1,11 @@
 import tiktoken
 import torch
 from torch.utils.data import Dataset, DataLoader
+from Bangala_LLM.utils.logger import logger
 
 
 class GPTDatasetV1(Dataset):
-    def __init__(self, txt, tokenizer, max_length, stride):
+    def __init__(self, txt, tokenizer, max_length=4, stride=1):
         self.input_ids = []
         self.target_ids = []
 
@@ -28,8 +29,10 @@ class GPTDatasetV1(Dataset):
 def create_dataloader_v1(
     txt, batch_size, max_length, stride, shuffle=True, drop_last=True, num_workers=0
 ):
-    # Initialize the tokenizer
+    # Initialize the tokenizer - using gpt2 to match model vocab_size
     tokenizer = tiktoken.get_encoding("gpt2")
+    # tokenizer.add_special_tokens({"eos_token": "<|EOS|>"})
+    logger.info("Tokenizer initialized and special tokens added.")
 
     # Create dataset
     dataset = GPTDatasetV1(txt, tokenizer, max_length, stride)
@@ -43,4 +46,20 @@ def create_dataloader_v1(
         num_workers=num_workers,
     )
 
+    logger.info(f"DataLoader created with {len(dataloader)} batches.")
     return dataloader
+
+
+# if __name__ == "__main__":
+#     sample_text = "This is a sample text for testing the GPTDatasetV1 and DataLoader.<|endoftext|> It contains multiple sentences to ensure that the sliding window works correctly.<|endoftext|>"
+#     dataloader = create_dataloader_v1(
+#         sample_text, batch_size=2, max_length=5, stride=1, num_workers=3
+#     )
+
+#     print("Sample batches from DataLoader:")
+#     for batch_idx, (input_ids, target_ids) in enumerate(dataloader):
+#         print(f"Batch {batch_idx}:")
+#         print("Input IDs:", input_ids)
+#         print("Target IDs:", target_ids)
+#         if batch_idx == 10:  # Just show first 3 batches for brevity
+#             break

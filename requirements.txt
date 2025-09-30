@@ -1,4 +1,4 @@
 pyyaml 
-pytorch
+torch
 tiktoken
 bnlp_toolkit

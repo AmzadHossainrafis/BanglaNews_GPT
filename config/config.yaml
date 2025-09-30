@@ -1,25 +1,26 @@
 model_config:
-  - vocab_size: 50257,
-  - context_length: 1024, #dont change it
-  - emb_dim: 768, #dont change it
-  - num_heads: 12,
-  - dropout: 0.1,
-  - num_layers: 12,
-  - qkv_bias: False,
+  vocab_size: 50257
+  context_length: 256 #reduced from 1024 for CPU training
+  emb_dim: 768 #dont change it
+  num_heads: 12
+  dropout: 0.1
+  num_layers: 12
+  qkv_bias: False
+  
 
 dir : 
-  train_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/train.txt # CHANGE THIS PATH TO YOUR DATASET PATH
-  eval_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/valid.txt # CHANGE THIS PATH TO YOUR DATASET PATH
+  train_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/prothom_data.csv # CHANGE THIS PATH TO YOUR DATASET PATH
+  eval_data_path : /home/amzad/Desktop/BanglaNews_GPT/dataset/demo_text.txt # CHANGE THIS PATH TO YOUR DATASET PATH
 
 
 data_loader:
-  train_batch_size: 12
-  eval_batch_size: 4
-  num_workers: 4
-  pin_memory: True
+  train_batch_size: 2
+  eval_batch_size: 1
+  num_workers: 0
+  pin_memory: False
   shuffle: True
   val_split: 0.1
-  seq_len: 1024
+  seq_len: 256
   drop_last: True
  
 
